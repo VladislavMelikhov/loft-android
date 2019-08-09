@@ -7,14 +7,15 @@ import android.os.Handler;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SplashActivity extends AppCompatActivity {
+public final class SplashActivity extends AppCompatActivity {
+
+	private static final int SPLASH_DELAY = 2000;
 
 	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState) {
+	protected void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		new Handler().postDelayed(() -> {
-			final Intent intent = new Intent(this, MainActivity.class);
-			startActivity(intent);
-		}, 2000);
+			startActivity(new Intent(this, MainActivity.class));
+		}, SPLASH_DELAY);
 	}
 }

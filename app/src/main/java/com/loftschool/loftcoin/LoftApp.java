@@ -7,7 +7,7 @@ import com.loftschool.loftcoin.log.DebugTree;
 
 import timber.log.Timber;
 
-public class LoftApp extends Application {
+public final class LoftApp extends Application {
 
 	@Override
 	public void onCreate() {

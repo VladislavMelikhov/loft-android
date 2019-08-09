@@ -6,11 +6,14 @@ import java.util.Locale;
 
 import timber.log.Timber;
 
-@SuppressWarnings("ThrowableNotThrown")
-public class DebugTree extends Timber.DebugTree {
+public final class DebugTree extends Timber.DebugTree {
 
 	@Override
-	protected void log(int priority, String tag, @NotNull String message, Throwable t) {
+	protected void log(final int priority,
+	                   final String tag,
+	                   final @NotNull String message,
+	                   final Throwable throwable) {
+
 		final StackTraceElement ste = new Throwable().fillInStackTrace().getStackTrace()[5];
 		super.log(
 			priority,
@@ -23,7 +26,7 @@ public class DebugTree extends Timber.DebugTree {
 				ste.getFileName(),
 				ste.getLineNumber(),
 				message),
-			t
+			throwable
 		);
 	}
 }
