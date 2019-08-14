@@ -32,6 +32,8 @@ public final class WelcomePagesAdapter extends PagerAdapter {
 		R.string.welcome_page_3_subtitle
 	};
 
+	private static final String PAGE_TITLE = "•";
+
 	private final LayoutInflater mInflater;
 
 	public WelcomePagesAdapter(@NonNull final LayoutInflater mInflater) {
@@ -45,7 +47,8 @@ public final class WelcomePagesAdapter extends PagerAdapter {
 
 	@NonNull
 	@Override
-	public Object instantiateItem(@NonNull ViewGroup container, int position) {
+	public Object instantiateItem(@NonNull final ViewGroup container,
+	                              final int position) {
 		final View view = mInflater.inflate(R.layout.layout_welcome_page, container, false);
 
 		container.addView(view, new ViewGroup.LayoutParams(
@@ -60,20 +63,21 @@ public final class WelcomePagesAdapter extends PagerAdapter {
 	}
 
 	@Override
-	public void destroyItem(@NonNull ViewGroup container,
-	                        int position,
-	                        @NonNull Object object) {
+	public void destroyItem(@NonNull final ViewGroup container,
+	                        final int position,
+	                        @NonNull final Object object) {
 		container.removeView((View) object);
 	}
 
 	@Override
-	public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+	public boolean isViewFromObject(@NonNull final View view,
+	                                @NonNull final Object object) {
 		return Objects.equals(view, object);
 	}
 
 	@Nullable
 	@Override
-	public CharSequence getPageTitle(int position) {
-		return "•";
+	public CharSequence getPageTitle(final int position) {
+		return PAGE_TITLE;
 	}
 }
