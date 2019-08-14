@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
+
 public final class WelcomeActivity extends AppCompatActivity {
 
 	@Override
@@ -17,8 +19,10 @@ public final class WelcomeActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_welcome);
 
-		this.<ViewPager>findViewById(R.id.vp_welcome_pager)
-			.setAdapter(new WelcomePagesAdapter(getLayoutInflater()));
+		final ViewPager vp_welcome_pager = findViewById(R.id.vp_welcome_pager);
+
+		vp_welcome_pager.setAdapter(new WelcomePagesAdapter(getLayoutInflater()));
+		this.<TabLayout>findViewById(R.id.tl_welcome_pages).setupWithViewPager(vp_welcome_pager);
 
 		this.<AppCompatButton>findViewById(R.id.btn_start_working)
 			.setOnClickListener(view -> {

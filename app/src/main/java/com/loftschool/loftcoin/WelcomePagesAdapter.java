@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.viewpager.widget.PagerAdapter;
@@ -68,5 +69,11 @@ public final class WelcomePagesAdapter extends PagerAdapter {
 	@Override
 	public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
 		return Objects.equals(view, object);
+	}
+
+	@Nullable
+	@Override
+	public CharSequence getPageTitle(int position) {
+		return "•";
 	}
 }
