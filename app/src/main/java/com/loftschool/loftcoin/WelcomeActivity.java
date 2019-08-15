@@ -38,7 +38,7 @@ public final class WelcomeActivity extends AppCompatActivity {
 		this.<AppCompatButton>findViewById(R.id.btn_start_working)
 			.setOnClickListener(view -> {
 				final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-				sharedPreferences.edit().putBoolean("show_welcome_screen", false).apply();
+				sharedPreferences.edit().putBoolean(SplashActivity.SHOW_WELCOME_SCREEN, false).apply();
 
 				final Intent intent = new Intent(this, MainActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

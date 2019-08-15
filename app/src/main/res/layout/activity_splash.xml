@@ -46,14 +46,14 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/appCompatTextView"
+        android:id="@+id/tv_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:text="@string/app_name"
-        android:textSize="48sp"
+        android:textAppearance="?attr/textAppearanceHeadline1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_outer_circle"/>
+        app:layout_constraintTop_toBottomOf="@id/iv_outer_circle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
