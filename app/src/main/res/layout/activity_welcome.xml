@@ -31,7 +31,8 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatTextView
+        style="?attr/gradientButton"
         android:id="@+id/btn_start_working"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
