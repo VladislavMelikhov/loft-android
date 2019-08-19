@@ -1,14 +1,12 @@
 package com.loftschool.loftcoin;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -35,10 +33,10 @@ public final class WelcomeActivity extends AppCompatActivity {
 		this.<TabLayout>findViewById(R.id.tl_welcome_pages)
 			.setupWithViewPager(vp_welcome_pager);
 
-		this.<AppCompatButton>findViewById(R.id.btn_start_working)
+		this.<AppCompatTextView>findViewById(R.id.tv_start_working)
 			.setOnClickListener(view -> {
-				final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-				sharedPreferences.edit().putBoolean(SplashActivity.SHOW_WELCOME_SCREEN, false).apply();
+				final Settings settings = new Settings(this);
+				settings.doNotShowWelcomeScreenNextTime();
 
 				final Intent intent = new Intent(this, MainActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
