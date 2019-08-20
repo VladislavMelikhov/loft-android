@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.loftschool.loftcoin.presentation.main.MainActivity;
 
 import java.util.Arrays;
 import java.util.List;

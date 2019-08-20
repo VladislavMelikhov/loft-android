@@ -7,6 +7,8 @@ import android.os.Handler;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.loftschool.loftcoin.presentation.main.MainActivity;
+
 public final class SplashActivity extends AppCompatActivity {
 
 	private static final int SPLASH_DELAY = 2000;
