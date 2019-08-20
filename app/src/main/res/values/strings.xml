@@ -11,4 +11,8 @@
     <string name="wallets">Кошельки</string>
     <string name="exchange_rate">Курс</string>
     <string name="converter">Конвертер</string>
+
+    <string name="add_wallet">Добавить</string>
+
+    <string name="header_wallet">Кошельки</string>
 </resources>
