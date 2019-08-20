@@ -31,12 +31,17 @@ public final class MainViewModel extends ViewModel {
 	}
 
 	public MainViewModel() {
-		fragmentFactories.put(R.id.wallets, new WalletFragmentFactory());
-		fragmentFactories.put(R.id.exchange_rate, new ExchangeRatesFragmentFactory());
-		fragmentFactories.put(R.id.converter, new ConverterFragmentFactory());
+		addFragmentFactory(R.id.wallets, new WalletFragmentFactory());
+		addFragmentFactory(R.id.exchange_rate, new ExchangeRatesFragmentFactory());
+		addFragmentFactory(R.id.converter, new ConverterFragmentFactory());
 	}
 
-	public void onTabSelect(@IdRes int tabId,
+	private void addFragmentFactory(@IdRes final int id,
+	                                @NonNull final MainFragmentFactory fragmentFactory) {
+		fragmentFactories.put(id, fragmentFactory);
+	}
+
+	public void onTabSelect(@IdRes final int tabId,
 	                        @NonNull final FragmentManager fragmentManager) {
 
 		final MainFragmentFactory fragmentFactory = fragmentFactories.get(tabId);
