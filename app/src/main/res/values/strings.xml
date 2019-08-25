@@ -7,4 +7,11 @@
     <string name="welcome_page_2_subtitle">Следи за курсом валют и вовремя реагируй на изменения динамики цены.</string>
     <string name="welcome_page_3_title">Конвертер валют</string>
     <string name="welcome_page_3_subtitle">Конвертер валют</string>
+
+    <string name="wallets">Кошельки</string>
+    <string name="exchange_rate">Курс</string>
+    <string name="converter">Конвертер</string>
+
+    <string name="add_wallet">Добавить</string>
+
 </resources>

@@ -1,13 +1,13 @@
 package com.loftschool.loftcoin;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.loftschool.loftcoin.presentation.main.MainActivity;
 
 public final class SplashActivity extends AppCompatActivity {
 
@@ -19,10 +19,10 @@ public final class SplashActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 
-		final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		final Settings settings = new Settings(this);
 
 		new Handler().postDelayed(() -> {
-			if (sharedPreferences.getBoolean(SHOW_WELCOME_SCREEN, true)) {
+			if (settings.shouldShowWelcomeScreen()) {
 				startActivity(new Intent(this, WelcomeActivity.class));
 			} else {
 				startActivity(new Intent(this, MainActivity.class));
