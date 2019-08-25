@@ -25,20 +25,15 @@ public final class MainViewModel extends ViewModel {
 	private final SparseArrayCompat<MainFragmentFactory> fragmentFactories =
 		new SparseArrayCompat<>();
 
-	@NonNull
-	public LiveData<Integer> getTitleId() {
-		return titleId;
-	}
-
 	public MainViewModel() {
 		addFragmentFactory(R.id.wallets, new WalletFragmentFactory());
 		addFragmentFactory(R.id.exchange_rate, new ExchangeRatesFragmentFactory());
 		addFragmentFactory(R.id.converter, new ConverterFragmentFactory());
 	}
 
-	private void addFragmentFactory(@IdRes final int id,
-	                                @NonNull final MainFragmentFactory fragmentFactory) {
-		fragmentFactories.put(id, fragmentFactory);
+	@NonNull
+	public LiveData<Integer> getTitleId() {
+		return titleId;
 	}
 
 	public void onTabSelect(@IdRes final int tabId,
@@ -53,6 +48,11 @@ public final class MainViewModel extends ViewModel {
 			fragmentFactory.getFragment(),
 			fragmentManager
 		);
+	}
+
+	private void addFragmentFactory(@IdRes final int id,
+	                                @NonNull final MainFragmentFactory fragmentFactory) {
+		fragmentFactories.put(id, fragmentFactory);
 	}
 
 	private void replaceFragment(@NonNull final Fragment fragment,
