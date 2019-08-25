@@ -11,7 +11,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "CMC_API_KEY", "\"${pCoinMarketCapKey}\""
-        buildConfigField "String", "CMC_API_ENDPOINT", '"https://pro-api.coinmarketcap.com/v1"'
+        buildConfigField "String", "CMC_API_ENDPOINT", '"https://pro-api.coinmarketcap.com/v1/"'
     }
     buildTypes {
         release {
