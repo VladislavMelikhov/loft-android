@@ -7,15 +7,17 @@ import com.loftschool.loftcoin.BuildConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class ApiFactory {
 
-	final Retrofit retrofit;
+	private final Retrofit retrofit;
 
 	public ApiFactory() {
 		retrofit = new Retrofit.Builder()
 			.client(createOkHttpClient())
 			.baseUrl(BuildConfig.CMC_API_ENDPOINT)
+			.addConverterFactory(GsonConverterFactory.create())
 			.build();
 	}
 

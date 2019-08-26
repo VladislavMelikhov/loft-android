@@ -12,6 +12,7 @@ android {
 
         buildConfigField "String", "CMC_API_KEY", "\"${pCoinMarketCapKey}\""
         buildConfigField "String", "CMC_API_ENDPOINT", '"https://pro-api.coinmarketcap.com/v1/"'
+        buildConfigField "String", "CMC_IMG_ENDPOINT", '"https://s2.coinmarketcap.com/static/img/"'
     }
     buildTypes {
         release {
