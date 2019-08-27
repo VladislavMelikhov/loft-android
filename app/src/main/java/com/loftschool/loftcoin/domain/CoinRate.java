@@ -9,41 +9,41 @@ import com.google.auto.value.AutoValue;
 public abstract class CoinRate {
 
 	@NonNull
-	static CoinRate.Builder builder() {
+	public static CoinRate.Builder builder() {
 		return new AutoValue_CoinRate.Builder();
 	}
 
-	abstract int id();
+	public abstract int id();
 
 	@NonNull
-	abstract String symbol();
+	public abstract String symbol();
 
 	@NonNull
-	abstract String price();
+	public abstract String price();
 
 	@NonNull
-	abstract String change24();
+	public abstract String change24();
 
 	@NonNull
-	abstract String imageUrl();
+	public abstract String imageUrl();
 
-	abstract boolean isChange24Negative();
+	public abstract boolean isChange24Negative();
 
 	@AutoValue.Builder
-	abstract static class Builder {
+	public abstract static class Builder {
 
-		abstract Builder id(int value);
+		public abstract Builder id(int value);
 
-		abstract Builder symbol(String value);
+		public abstract Builder symbol(String value);
 
-		abstract Builder price(String value);
+		public abstract Builder price(String value);
 
-		abstract Builder change24(String value);
+		public abstract Builder change24(String value);
 
-		abstract Builder imageUrl(String value);
+		public abstract Builder imageUrl(String value);
 
-		abstract Builder isChange24Negative(boolean value);
+		public abstract Builder isChange24Negative(boolean value);
 
-		abstract CoinRate build();
+		public abstract CoinRate build();
 	}
 }
