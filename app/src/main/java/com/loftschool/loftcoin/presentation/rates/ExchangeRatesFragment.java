@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.loftschool.loftcoin.R;
+import com.loftschool.loftcoin.util.ImageLoader;
 
 public final class ExchangeRatesFragment extends Fragment {
 
@@ -41,7 +42,7 @@ public final class ExchangeRatesFragment extends Fragment {
 
 		final RecyclerView rv_rates = view.findViewById(R.id.rv_rates);
 		final SwipeRefreshLayout rl_rates = view.findViewById(R.id.rl_rates);
-		final RatesAdapter ratesAdapter = new RatesAdapter(getLayoutInflater());
+		final RatesAdapter ratesAdapter = new RatesAdapter(getLayoutInflater(), new ImageLoader());
 
 		rv_rates.setHasFixedSize(true);
 		rv_rates.setLayoutManager(new LinearLayoutManager(view.getContext()));
