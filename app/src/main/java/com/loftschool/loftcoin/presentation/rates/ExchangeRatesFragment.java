@@ -2,6 +2,9 @@ package com.loftschool.loftcoin.presentation.rates;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -72,5 +75,26 @@ public final class ExchangeRatesFragment extends Fragment {
 					Snackbar.make(view, error.getMessage(), Snackbar.LENGTH_SHORT).show();
 				}
 			);
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(@NonNull final Menu menu,
+	                                @NonNull final MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.menu_rates, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(@NonNull final MenuItem item) {
+		if (R.id.currency == item.getItemId()) {
+			//TODO implement
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

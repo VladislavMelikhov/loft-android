@@ -1,10 +1,8 @@
 package com.loftschool.loftcoin.presentation.rates;
 
-import android.graphics.Outline;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
