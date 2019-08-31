@@ -52,6 +52,8 @@ public final class RatesViewModel extends ViewModel {
 	private final MutableLiveData<Boolean> loadingState = new MutableLiveData<>();
 	private final MutableLiveData<Throwable> errorState = new MutableLiveData<>();
 
+	private Currency currency = Currency.USD;
+
 	public RatesViewModel(@NonNull final CoinsRepository coinsRepository,
 	                      @NonNull final PriceFormatter priceFormatter,
 	                      @NonNull final ChangeFormatter changeFormatter,
@@ -78,11 +80,20 @@ public final class RatesViewModel extends ViewModel {
 		return errorState;
 	}
 
+	public void setCurrency(@NonNull final Currency value) {
+		Objects.requireNonNull(value);
+		if (currency != value) {
+			currency = value;
+		}
+		refresh();
+	}
+
 	void refresh() {
 		loadingState.postValue(true);
-		coinsRepository.listings("USD",
+		final String convert = currency.name();
+		coinsRepository.listings(convert,
 			coins -> {
-				coinRates.postValue(convertToCoinRates(coins, "USD"));
+				coinRates.postValue(convertToCoinRates(coins, convert));
 				loadingState.postValue(false);
 			},
 			error -> {

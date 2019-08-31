@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.loftschool.loftcoin.R;
+import com.loftschool.loftcoin.util.Consumer;
 
 import java.util.Objects;
 
@@ -17,11 +18,14 @@ public final class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdap
 
 	private final LayoutInflater layoutInflater;
 	private final Currency[] currencies;
+	private final Consumer<Currency> onCLick;
 
 	public CurrenciesAdapter(@NonNull final LayoutInflater layoutInflater,
-	                         @NonNull final Currency[] currencies) {
+	                         @NonNull final Currency[] currencies,
+	                         @NonNull final Consumer<Currency> onCLick) {
 		this.layoutInflater = Objects.requireNonNull(layoutInflater);
 		this.currencies = Objects.requireNonNull(currencies);
+		this.onCLick = Objects.requireNonNull(onCLick);
 	}
 
 	@NonNull
@@ -40,7 +44,7 @@ public final class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdap
 	@Override
 	public void onBindViewHolder(@NonNull final ViewHolder holder,
 	                             final int position) {
-		holder.bind(currencies[position]);
+		holder.bind(currencies[position], onCLick);
 	}
 
 	@Override
@@ -60,12 +64,18 @@ public final class CurrenciesAdapter extends RecyclerView.Adapter<CurrenciesAdap
 			tv_currency_name = itemView.findViewById(R.id.tv_currency_name);
 		}
 
-		private void bind(@NonNull final Currency currency) {
+		private void bind(@NonNull final Currency currency,
+		                  @NonNull final Consumer<Currency> onClick) {
 			Objects.requireNonNull(currency);
+			Objects.requireNonNull(onClick);
 
 			final Context context = itemView.getContext();
 			tv_currency_name.setText(currency.getName(context));
 			tv_currency_symbol.setText(currency.getSymbol(context));
+
+			itemView.setOnClickListener(view ->
+				onClick.apply(currency)
+			);
 		}
 	}
 }

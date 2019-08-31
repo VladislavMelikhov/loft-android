@@ -41,7 +41,14 @@ public final class CurrencyDialog extends DialogFragment {
 			new LinearLayoutManager(requireContext())
 		);
 		rv_currencies.setAdapter(
-			new CurrenciesAdapter(getLayoutInflater(), Currency.values())
+			new CurrenciesAdapter(
+				getLayoutInflater(),
+				Currency.values(),
+				currency -> {
+					ratesViewModel.setCurrency(currency);
+					dismiss();
+				}
+			)
 		);
 	}
 }

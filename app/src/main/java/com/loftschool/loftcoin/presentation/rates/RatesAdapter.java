@@ -93,6 +93,7 @@ public final class RatesAdapter extends ListAdapter<CoinRate, RatesAdapter.ViewH
 		                  @NonNull final ImageLoader imageLoader,
 		                  final boolean isEven) {
 			Objects.requireNonNull(rate);
+			Objects.requireNonNull(imageLoader);
 
 			tv_symbol.setText(rate.symbol());
 			tv_price.setText(rate.price());
