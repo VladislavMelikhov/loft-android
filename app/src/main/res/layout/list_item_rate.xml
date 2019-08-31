@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_symbol"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textAppearance="?attr/textAppearanceHeadline3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_logo"
+        app:layout_constraintEnd_toEndOf="@id/barrier_price"
+        tools:text="@sample/ListingsLatest.json/data/symbol"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="tv_price, tv_change"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceHeadline4"
+        app:layout_constraintBottom_toTopOf="@id/tv_change"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@sample/ListingsLatest.json/data/quote/USD/price" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceHeadline4"
+        app:layout_constraintTop_toBottomOf="@id/tv_price"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@sample/ListingsLatest.json/data/quote/USD/percent_change_24h" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

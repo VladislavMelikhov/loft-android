@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.loftschool.loftcoin.R;
-import com.loftschool.loftcoin.presentation.ExchangeRatesFragment;
+import com.loftschool.loftcoin.presentation.rates.ExchangeRatesFragment;
 
 public final class ExchangeRatesFragmentFactory implements MainFragmentFactory {
 

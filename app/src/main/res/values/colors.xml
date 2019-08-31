@@ -28,4 +28,7 @@
     <color name="dark_seven">#10101a</color>
     <color name="blue_grey">#9c9eb9</color>
 
+    <color name="colorNegative">@color/watermelon</color>
+    <color name="colorPositive">@color/weird_green</color>
+
 </resources>

@@ -14,4 +14,18 @@
 
     <string name="add_wallet">Добавить</string>
 
+    <string name="currency_chooser">Выбор валюты</string>
+
+    <string-array name="currency_symbols">
+        <item>$</item>
+        <item>€</item>
+        <item>₽</item>
+    </string-array>
+
+    <string-array name="currency_names">
+        <item>Доллар</item>
+        <item>Евро</item>
+        <item>Рубль</item>
+    </string-array>
+
 </resources>
