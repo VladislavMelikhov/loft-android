@@ -16,12 +16,6 @@
 
     <string name="currency_chooser">Выбор валюты</string>
 
-    <string-array name="currencies">
-        <item>USD</item>
-        <item>EUR</item>
-        <item>RUB</item>
-    </string-array>
-
     <string-array name="currency_symbols">
         <item>$</item>
         <item>€</item>

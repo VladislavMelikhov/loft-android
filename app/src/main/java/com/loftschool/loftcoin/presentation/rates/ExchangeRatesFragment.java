@@ -93,7 +93,9 @@ public final class ExchangeRatesFragment extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(@NonNull final MenuItem item) {
 		if (R.id.currency == item.getItemId()) {
-			//TODO implement
+			new CurrencyDialog()
+				.show(getChildFragmentManager(), CurrencyDialog.TAG);
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
