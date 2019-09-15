@@ -21,6 +21,9 @@ public interface MainComponent {
 		@BindsInstance
 		Builder activity(FragmentActivity activity);
 
+		@BindsInstance
+		Builder args(MainVMArgs args);
+
 		MainComponent build();
 	}
 }

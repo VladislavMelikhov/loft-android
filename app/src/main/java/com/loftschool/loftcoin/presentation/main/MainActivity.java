@@ -28,6 +28,7 @@ public final class MainActivity extends AppCompatActivity {
 		DaggerMainComponent
 			.builder()
 			.activity(this)
+			.args(new MainVMArgs(R.string.exchange_rate))
 			.build()
 			.inject(this);
 

@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.loftschool.loftcoin.R;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 public final class MainViewModel extends ViewModel {
@@ -15,8 +17,9 @@ public final class MainViewModel extends ViewModel {
 		new MutableLiveData<>();
 
 	@Inject
-	public MainViewModel() {
-		titleId.setValue(R.string.wallets);
+	public MainViewModel(@NonNull final MainVMArgs args) {
+		Objects.requireNonNull(args);
+		titleId.setValue(args.getTitleId());
 	}
 
 	@NonNull
