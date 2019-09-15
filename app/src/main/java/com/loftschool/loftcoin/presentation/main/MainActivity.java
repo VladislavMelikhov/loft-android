@@ -10,11 +10,22 @@ import com.loftschool.loftcoin.R;
 
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 public final class MainActivity extends AppCompatActivity {
+
+	@Inject MainRouter mainRouter = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		DaggerMainComponent
+			.builder()
+			.activity(this)
+			.build()
+			.inject(this);
+
 		setContentView(R.layout.activity_main);
 
 		final MainViewModel mainViewModel = ViewModelProviders
@@ -36,18 +47,12 @@ public final class MainActivity extends AppCompatActivity {
 
 		this.<BottomNavigationView>findViewById(R.id.bottom_navigation)
 			.setOnNavigationItemSelectedListener(menuItem -> {
-				mainViewModel.onTabSelect(
-					menuItem.getItemId(),
-					getSupportFragmentManager()
-				);
+				mainRouter.navigateTo(menuItem.getItemId());
 				return true;
 			});
 
 		if (savedInstanceState == null) {
-			mainViewModel.onTabSelect(
-				R.id.wallets,
-				getSupportFragmentManager()
-			);
+			mainRouter.navigateTo(R.id.wallets);
 		}
 	}
 }
