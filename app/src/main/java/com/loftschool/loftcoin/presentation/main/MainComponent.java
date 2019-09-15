@@ -2,11 +2,14 @@ package com.loftschool.loftcoin.presentation.main;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.loftschool.loftcoin.vm.ViewModelModule;
+
 import dagger.BindsInstance;
 import dagger.Component;
 
 @Component(modules = {
-	MainModule.class
+	MainModule.class,
+	ViewModelModule.class
 })
 public interface MainComponent {
 

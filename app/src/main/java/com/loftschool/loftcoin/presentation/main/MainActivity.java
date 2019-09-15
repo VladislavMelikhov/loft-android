@@ -1,12 +1,14 @@
 package com.loftschool.loftcoin.presentation.main;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.loftschool.loftcoin.R;
+import com.loftschool.loftcoin.vm.ViewModelFactory;
 
 import java.util.Objects;
 
@@ -15,6 +17,9 @@ import javax.inject.Inject;
 public final class MainActivity extends AppCompatActivity {
 
 	@Inject MainRouter mainRouter = null;
+
+	@Inject
+	ViewModelProvider.Factory viewModelFactory = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,7 @@ public final class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 
 		final MainViewModel mainViewModel = ViewModelProviders
-			.of(this)
+			.of(this, viewModelFactory)
 			.get(MainViewModel.class);
 
 		setSupportActionBar(findViewById(R.id.toolbar_main));
