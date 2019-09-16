@@ -5,15 +5,21 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.loftschool.loftcoin.data.CoinsRepository;
+import com.loftschool.loftcoin.data.DataModule;
+
 import java.util.Locale;
 
 import javax.inject.Provider;
+import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
 
+@Singleton
 @Component(modules = {
-	AppModule.class
+	AppModule.class,
+	DataModule.class
 })
 public interface AppComponent {
 
@@ -27,6 +33,8 @@ public interface AppComponent {
 	}
 
 	Provider<Locale> locale();
+
+	CoinsRepository coinsRepository();
 
 	@Component.Factory
 	interface Factory {
