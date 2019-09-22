@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +21,12 @@ import com.google.android.material.snackbar.Snackbar;
 import com.loftschool.loftcoin.R;
 import com.loftschool.loftcoin.util.ImageLoader;
 
+import javax.inject.Inject;
+
 public final class ExchangeRatesFragment extends Fragment {
+
+	@Inject
+	ViewModelProvider.Factory viewModelFactory;
 
 	@Nullable
 	@Override
@@ -39,8 +45,14 @@ public final class ExchangeRatesFragment extends Fragment {
 	                          @Nullable final Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
+		DaggerRatesComponent
+			.builder()
+			.fragment(this)
+			.build()
+			.inject(this);
+
 		final RatesViewModel ratesViewModel = ViewModelProviders
-			.of(this, new RatesViewModel.Factory(requireContext()))
+			.of(this, viewModelFactory)
 			.get(RatesViewModel.class);
 
 		final RecyclerView rv_rates = view.findViewById(R.id.rv_rates);

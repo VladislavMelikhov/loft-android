@@ -31,9 +31,9 @@ public final class CurrencyDialog extends DialogFragment {
 	                          @Nullable final Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		final RatesViewModel ratesViewModel = ViewModelProviders
-			.of(requireParentFragment(), new RatesViewModel.Factory(requireContext()))
-			.get(RatesViewModel.class);
+//		final RatesViewModel ratesViewModel = ViewModelProviders
+//			.of(requireParentFragment(), new RatesViewModel.Factory(requireContext()))
+//			.get(RatesViewModel.class);
 
 		final RecyclerView rv_currencies = view.findViewById(R.id.rv_currencies);
 		rv_currencies.setHasFixedSize(true);
@@ -45,7 +45,7 @@ public final class CurrencyDialog extends DialogFragment {
 				getLayoutInflater(),
 				Currency.values(),
 				currency -> {
-					ratesViewModel.setCurrency(currency);
+					//ratesViewModel.setCurrency(currency);
 					dismiss();
 				}
 			)
