@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.loftschool.loftcoin.data.CoinsRepository;
+import com.loftschool.loftcoin.data.Currencies;
 import com.loftschool.loftcoin.data.DataModule;
 
 import java.util.Locale;
@@ -35,6 +36,8 @@ public interface AppComponent {
 	Provider<Locale> locale();
 
 	CoinsRepository coinsRepository();
+
+	Currencies currencies();
 
 	@Component.Factory
 	interface Factory {

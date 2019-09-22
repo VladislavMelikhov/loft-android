@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.loftschool.loftcoin.AppComponent;
 import com.loftschool.loftcoin.data.CoinsRepository;
+import com.loftschool.loftcoin.data.Currencies;
 import com.loftschool.loftcoin.data.dto.Coin;
 import com.loftschool.loftcoin.domain.CoinRate;
 import com.loftschool.loftcoin.util.Function;
@@ -32,7 +33,14 @@ public interface RatesModule {
 
 	@Provides
 	static CoinsRepository coinsRepository(@NonNull final AppComponent appComponent) {
+		Objects.requireNonNull(appComponent);
 		return appComponent.coinsRepository();
+	}
+
+	@Provides
+	static Currencies currencies(@NonNull final AppComponent appComponent) {
+		Objects.requireNonNull(appComponent);
+		return appComponent.currencies();
 	}
 
 	@Binds
