@@ -8,9 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.loftschool.loftcoin.data.CoinsRepository;
 import com.loftschool.loftcoin.data.Currencies;
-import com.loftschool.loftcoin.data.dto.Coin;
-import com.loftschool.loftcoin.domain.CoinRate;
-import com.loftschool.loftcoin.util.Function;
+import com.loftschool.loftcoin.db.CoinEntity;
 
 import java.util.Currency;
 import java.util.List;
@@ -23,25 +21,23 @@ public final class RatesViewModel extends ViewModel {
 
 
 	private final CoinsRepository coinsRepository;
-	private final Function<List<Coin>, List<CoinRate>> ratesMapper;
 
-	private final MutableLiveData<List<CoinRate>> coinRates = new MutableLiveData<>();
+	private final LiveData<List<CoinEntity>> coinRates;
 	private final MutableLiveData<Boolean> loadingState = new MutableLiveData<>();
 	private final MutableLiveData<Throwable> errorState = new MutableLiveData<>();
 	private final Currencies currencies;
 
 	@Inject
 	public RatesViewModel(@NonNull final CoinsRepository coinsRepository,
-	                      @NonNull final Function<List<Coin>, List<CoinRate>> ratesMapper,
 	                      @NonNull final Currencies currencies) {
 		this.coinsRepository = Objects.requireNonNull(coinsRepository);
-		this.ratesMapper = Objects.requireNonNull(ratesMapper);
 		this.currencies = Objects.requireNonNull(currencies);
+		this.coinRates = this.coinsRepository.listings();
 		refresh();
 	}
 
 	@NonNull
-	public LiveData<List<CoinRate>> getCoinRates() {
+	public LiveData<List<CoinEntity>> getCoinRates() {
 		return coinRates;
 	}
 
@@ -59,9 +55,8 @@ public final class RatesViewModel extends ViewModel {
 		loadingState.postValue(true);
 		final Pair<Currency, Locale> pair = currencies.getCurrent();
 		final String convert = Objects.requireNonNull(pair.first).getCurrencyCode();
-		coinsRepository.listings(convert,
-			coins -> {
-				coinRates.postValue(ratesMapper.apply(coins));
+		coinsRepository.refresh(convert,
+			() -> {
 				loadingState.postValue(false);
 			},
 			error -> {
