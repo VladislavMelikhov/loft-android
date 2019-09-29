@@ -1,18 +1,16 @@
 package com.loftschool.loftcoin.presentation.rates;
 
 import androidx.annotation.NonNull;
-import androidx.core.util.Pair;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.loftschool.loftcoin.data.CoinsRepository;
 import com.loftschool.loftcoin.data.Currencies;
+import com.loftschool.loftcoin.data.Currency;
 import com.loftschool.loftcoin.db.CoinEntity;
 
-import java.util.Currency;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -53,9 +51,9 @@ public final class RatesViewModel extends ViewModel {
 
 	void refresh() {
 		loadingState.postValue(true);
-		final Pair<Currency, Locale> pair = currencies.getCurrent();
-		final String convert = Objects.requireNonNull(pair.first).getCurrencyCode();
-		coinsRepository.refresh(convert,
+		final Currency currency = currencies.getCurrent();
+
+		coinsRepository.refresh(currency.getCode(),
 			() -> {
 				loadingState.postValue(false);
 			},
@@ -63,5 +61,11 @@ public final class RatesViewModel extends ViewModel {
 				errorState.postValue(error);
 				loadingState.postValue(false);
 			});
+	}
+
+	void updateCurrency(@NonNull final Currency currency) {
+		Objects.requireNonNull(currency);
+		currencies.setCurrent(currency);
+		refresh();
 	}
 }

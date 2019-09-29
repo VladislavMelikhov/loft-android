@@ -26,6 +26,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceHeadline3"
         android:layout_marginStart="16dp"
-        tools:text="USD"/>
+        tools:text="Dollar | USD"/>
 
 </LinearLayout>

@@ -19,6 +19,8 @@ public interface RatesComponent {
 
 	void inject(ExchangeRatesFragment fragment);
 
+	void inject(CurrencyDialog dialog);
+
 	@Component.Builder
 	interface Builder {
 

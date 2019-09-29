@@ -33,7 +33,7 @@ public interface AppComponent {
 		throw new IllegalStateException("Application should be an instance of LoftApp");
 	}
 
-	Provider<Locale> locale();
+	Locale locale();
 
 	CoinsRepository coinsRepository();
 
