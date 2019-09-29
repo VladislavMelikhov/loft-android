@@ -14,35 +14,54 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.loftschool.loftcoin.R;
-import com.loftschool.loftcoin.domain.CoinRate;
-import com.loftschool.loftcoin.util.ImageLoader;
+import com.loftschool.loftcoin.db.CoinEntity;
+import com.loftschool.loftcoin.domain.ChangeFormatter;
+import com.loftschool.loftcoin.domain.ImageUrlFormatter;
+import com.loftschool.loftcoin.domain.PriceFormatter;
+import com.loftschool.loftcoin.domain.ImageLoader;
 
 import java.util.Objects;
 
-public final class RatesAdapter extends ListAdapter<CoinRate, RatesAdapter.ViewHolder> {
+import javax.inject.Inject;
 
-	private final LayoutInflater layoutInflater;
+public final class RatesAdapter extends ListAdapter<CoinEntity, RatesAdapter.ViewHolder> {
+
+	private LayoutInflater layoutInflater;
 	private final ImageLoader imageLoader;
+	private final PriceFormatter priceFormatter;
+	private final ChangeFormatter changeFormatter;
+	private final ImageUrlFormatter imageUrlFormatter;
 
-	public RatesAdapter(@NonNull final LayoutInflater layoutInflater,
-	                    @NonNull final ImageLoader imageLoader) {
-		super(new DiffUtil.ItemCallback<CoinRate>() {
+	@Inject
+	public RatesAdapter(@NonNull final ImageLoader imageLoader,
+	                    @NonNull final PriceFormatter priceFormatter,
+	                    @NonNull final ChangeFormatter changeFormatter,
+	                    @NonNull final ImageUrlFormatter imageUrlFormatter) {
+		super(new DiffUtil.ItemCallback<CoinEntity>() {
 
 			@Override
-			public boolean areItemsTheSame(@NonNull final CoinRate oldItem,
-			                               @NonNull final CoinRate newItem) {
+			public boolean areItemsTheSame(@NonNull final CoinEntity oldItem,
+			                               @NonNull final CoinEntity newItem) {
 				return oldItem.id() == newItem.id();
 			}
 
 			@Override
-			public boolean areContentsTheSame(@NonNull final CoinRate oldItem,
-			                                  @NonNull final CoinRate newItem) {
+			public boolean areContentsTheSame(@NonNull final CoinEntity oldItem,
+			                                  @NonNull final CoinEntity newItem) {
 				return Objects.equals(oldItem, newItem);
 			}
 		});
-		this.layoutInflater = Objects.requireNonNull(layoutInflater);
 		this.imageLoader = Objects.requireNonNull(imageLoader);
+		this.priceFormatter = Objects.requireNonNull(priceFormatter);
+		this.changeFormatter = Objects.requireNonNull(changeFormatter);
+		this.imageUrlFormatter = Objects.requireNonNull(imageUrlFormatter);
 		setHasStableIds(true);
+	}
+
+	@Override
+	public void onAttachedToRecyclerView(@NonNull final RecyclerView recyclerView) {
+		super.onAttachedToRecyclerView(recyclerView);
+		this.layoutInflater = LayoutInflater.from(recyclerView.getContext());
 	}
 
 	@Override
@@ -59,7 +78,11 @@ public final class RatesAdapter extends ListAdapter<CoinRate, RatesAdapter.ViewH
 				R.layout.list_item_rate,
 				parent,
 				false
-			)
+			),
+			imageLoader,
+			priceFormatter,
+			changeFormatter,
+			imageUrlFormatter
 		);
 	}
 
@@ -80,8 +103,23 @@ public final class RatesAdapter extends ListAdapter<CoinRate, RatesAdapter.ViewH
 		private final AppCompatTextView tv_price;
 		private final AppCompatTextView tv_change;
 
-		ViewHolder(@NonNull final View itemView) {
+		private final ImageLoader imageLoader;
+		private final PriceFormatter priceFormatter;
+		private final ChangeFormatter changeFormatter;
+		private final ImageUrlFormatter imageUrlFormatter;
+
+		ViewHolder(@NonNull final View itemView,
+		           @NonNull final ImageLoader imageLoader,
+		           @NonNull final PriceFormatter priceFormatter,
+		           @NonNull final ChangeFormatter changeFormatter,
+		           @NonNull final ImageUrlFormatter imageUrlFormatter) {
+
 			super(Objects.requireNonNull(itemView));
+
+			this.imageLoader = Objects.requireNonNull(imageLoader);
+			this.priceFormatter = Objects.requireNonNull(priceFormatter);
+			this.changeFormatter = Objects.requireNonNull(changeFormatter);
+			this.imageUrlFormatter = Objects.requireNonNull(imageUrlFormatter);
 
 			iv_logo = itemView.findViewById(R.id.iv_logo);
 			tv_symbol = itemView.findViewById(R.id.tv_symbol);
@@ -89,15 +127,15 @@ public final class RatesAdapter extends ListAdapter<CoinRate, RatesAdapter.ViewH
 			tv_change = itemView.findViewById(R.id.tv_change);
 		}
 
-		private void bind(@NonNull final CoinRate rate,
+		private void bind(@NonNull final CoinEntity rate,
 		                  @NonNull final ImageLoader imageLoader,
 		                  final boolean isEven) {
 			Objects.requireNonNull(rate);
 			Objects.requireNonNull(imageLoader);
 
 			tv_symbol.setText(rate.symbol());
-			tv_price.setText(rate.price());
-			tv_change.setText(rate.change24());
+			tv_price.setText(priceFormatter.format(rate.price()));
+			tv_change.setText(changeFormatter.format(rate.change24()));
 
 			tv_change.setTextColor(
 				ContextCompat.getColor(
@@ -110,7 +148,7 @@ public final class RatesAdapter extends ListAdapter<CoinRate, RatesAdapter.ViewH
 			);
 
 			imageLoader.loadImage(
-				rate.imageUrl(),
+				imageUrlFormatter.format(rate.id()),
 				iv_logo
 			);
 		}
@@ -125,10 +163,10 @@ public final class RatesAdapter extends ListAdapter<CoinRate, RatesAdapter.ViewH
 		}
 
 		@ColorRes
-		private int getChangeColor(@NonNull final CoinRate coinRate) {
+		private int getChangeColor(@NonNull final CoinEntity coinRate) {
 			Objects.requireNonNull(coinRate);
 
-			if (coinRate.isChange24Negative()) {
+			if (coinRate.change24() < 0) {
 				return R.color.colorNegative;
 			} else {
 				return R.color.colorPositive;

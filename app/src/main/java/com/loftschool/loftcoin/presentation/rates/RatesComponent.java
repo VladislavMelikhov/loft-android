@@ -3,6 +3,7 @@ package com.loftschool.loftcoin.presentation.rates;
 import androidx.fragment.app.Fragment;
 
 import com.loftschool.loftcoin.domain.FormattersModule;
+import com.loftschool.loftcoin.domain.LoadersModule;
 import com.loftschool.loftcoin.vm.ViewModelModule;
 
 import dagger.BindsInstance;
@@ -11,11 +12,14 @@ import dagger.Component;
 @Component(modules ={
 	RatesModule.class,
 	ViewModelModule.class,
-	FormattersModule.class
+	FormattersModule.class,
+	LoadersModule.class
 })
 public interface RatesComponent {
 
 	void inject(ExchangeRatesFragment fragment);
+
+	void inject(CurrencyDialog dialog);
 
 	@Component.Builder
 	interface Builder {

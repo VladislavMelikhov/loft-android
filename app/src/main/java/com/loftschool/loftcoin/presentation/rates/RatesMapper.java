@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 
 import com.loftschool.loftcoin.data.Currencies;
+import com.loftschool.loftcoin.data.Currency;
 import com.loftschool.loftcoin.data.dto.Coin;
 import com.loftschool.loftcoin.data.dto.Quote;
 import com.loftschool.loftcoin.domain.ChangeFormatter;
@@ -13,7 +14,6 @@ import com.loftschool.loftcoin.domain.PriceFormatter;
 import com.loftschool.loftcoin.util.Function;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -41,8 +41,8 @@ public final class RatesMapper implements Function<List<Coin>, List<CoinRate>> {
 	@Override
 	public List<CoinRate> apply(List<Coin> value) {
 		final List<CoinRate> rates = new ArrayList<>(value.size());
-		final Pair<Currency, Locale> pair = currencies.getCurrent();
-		final String convert = Objects.requireNonNull(pair.first).getCurrencyCode();
+		final Currency currency = currencies.getCurrent();
+		final String convert = currency.getCode();
 
 		for (final Coin coin : value) {
 			final Quote quote = Objects.requireNonNull(

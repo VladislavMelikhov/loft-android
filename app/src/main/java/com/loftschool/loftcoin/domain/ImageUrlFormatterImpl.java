@@ -16,7 +16,7 @@ public final class ImageUrlFormatterImpl implements ImageUrlFormatter {
 
 	@NonNull
 	@Override
-	public String format(final int id) {
+	public String format(final long id) {
 		return String.format(
 			Locale.US,
 			"%scoins/64x64/%d.png",

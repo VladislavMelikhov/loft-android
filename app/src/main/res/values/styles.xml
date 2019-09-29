@@ -16,12 +16,25 @@
         <item name="walletCardBackground">@color/dark_five</item>
         <item name="actionBarTheme">@style/AppTheme.AppBarOverlay</item>
         <item name="actionBarPopupTheme">@style/AppTheme.PopupOverlay</item>
+        <item name="dialogTheme">@style/AppTheme.Dialog</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.MaterialComponents.Dialog">
+        <item name="windowMinWidthMajor">65%</item>
+        <item name="windowMinWidthMinor">65%</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">?attr/colorPrimary</item>
+        <item name="textAppearanceHeadline1">@style/TextAppearance.H1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.H2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.H3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.H4</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>

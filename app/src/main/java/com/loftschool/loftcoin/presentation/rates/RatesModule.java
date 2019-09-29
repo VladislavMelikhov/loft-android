@@ -12,7 +12,10 @@ import com.loftschool.loftcoin.domain.CoinRate;
 import com.loftschool.loftcoin.util.Function;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+
+import javax.inject.Provider;
 
 import dagger.Binds;
 import dagger.Module;
@@ -41,6 +44,12 @@ public interface RatesModule {
 	static Currencies currencies(@NonNull final AppComponent appComponent) {
 		Objects.requireNonNull(appComponent);
 		return appComponent.currencies();
+	}
+
+	@Provides
+	static Locale locale(@NonNull final AppComponent appComponent) {
+		Objects.requireNonNull(appComponent);
+		return appComponent.locale();
 	}
 
 	@Binds
