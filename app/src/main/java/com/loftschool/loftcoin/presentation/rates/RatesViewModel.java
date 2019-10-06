@@ -37,7 +37,8 @@ public final class RatesViewModel extends ViewModel {
 
 		this.uiState = sourceOfTruth
 			.observeOn(schedulers.io())
-			.map(refresh -> currencies.getCurrent().getCode())
+			.flatMap(refresh -> currencies.current())
+			.map(Currency::getCode)
 			.flatMap(currencyCode -> coinsRepository
 				.listings(currencyCode)
 				.map(RatesUiState::success)
@@ -53,11 +54,5 @@ public final class RatesViewModel extends ViewModel {
 	@NonNull
 	public Observable<RatesUiState> uiState() {
 		return uiState.observeOn(schedulers.main());
-	}
-
-	void updateCurrency(@NonNull final Currency currency) {
-		Objects.requireNonNull(currency);
-		currencies.setCurrent(currency);
-		refresh();
 	}
 }

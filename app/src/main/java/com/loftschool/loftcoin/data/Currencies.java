@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 public interface Currencies {
 
 	@NonNull
@@ -14,4 +16,7 @@ public interface Currencies {
 	Currency getCurrent();
 
 	void setCurrent(@NonNull Currency currency);
+
+	@NonNull
+	Observable<Currency> current();
 }
