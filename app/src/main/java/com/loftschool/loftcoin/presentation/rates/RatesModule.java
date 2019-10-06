@@ -9,6 +9,7 @@ import com.loftschool.loftcoin.data.CoinsRepository;
 import com.loftschool.loftcoin.data.Currencies;
 import com.loftschool.loftcoin.data.dto.Coin;
 import com.loftschool.loftcoin.domain.CoinRate;
+import com.loftschool.loftcoin.rx.RxSchedulers;
 import com.loftschool.loftcoin.util.Function;
 
 import java.util.List;
@@ -50,6 +51,12 @@ public interface RatesModule {
 	static Locale locale(@NonNull final AppComponent appComponent) {
 		Objects.requireNonNull(appComponent);
 		return appComponent.locale();
+	}
+
+	@Provides
+	static RxSchedulers scheduler(@NonNull final AppComponent appComponent) {
+		Objects.requireNonNull(appComponent);
+		return appComponent.schedulers();
 	}
 
 	@Binds
