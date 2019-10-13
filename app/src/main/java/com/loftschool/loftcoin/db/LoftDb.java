@@ -16,4 +16,6 @@ import androidx.room.RoomDatabase;
 public abstract class LoftDb extends RoomDatabase {
 
 	public abstract CoinsDao coins();
+
+	public abstract WalletsDao wallets();
 }

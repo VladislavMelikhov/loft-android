@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.loftschool.loftcoin.R;
 import com.loftschool.loftcoin.presentation.ConverterFragment;
-import com.loftschool.loftcoin.presentation.wallets.WalletFragment;
+import com.loftschool.loftcoin.presentation.wallets.WalletsFragment;
 import com.loftschool.loftcoin.presentation.rates.ExchangeRatesFragment;
 import com.loftschool.loftcoin.util.Supplier;
 
@@ -22,7 +22,7 @@ public interface MainModule {
 	@Provides
 	static SparseArrayCompat<Supplier<Fragment>> fragments() {
 		final SparseArrayCompat<Supplier<Fragment>> fragments = new SparseArrayCompat<>();
-		fragments.put(R.id.wallets, WalletFragment::new);
+		fragments.put(R.id.wallets, WalletsFragment::new);
 		fragments.put(R.id.exchange_rate, ExchangeRatesFragment::new);
 		fragments.put(R.id.converter, ConverterFragment::new);
 		return fragments;

@@ -10,10 +10,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.loftschool.loftcoin.R;
 
-public final class WalletFragment extends Fragment {
+import javax.inject.Inject;
+
+public final class WalletsFragment extends Fragment {
+
+	@Inject
+	ViewModelProvider.Factory viewModelFactory;
 
 	@Nullable
 	@Override
@@ -38,5 +46,14 @@ public final class WalletFragment extends Fragment {
 	                                @NonNull final MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.menu_wallet, menu);
+	}
+
+	@Override
+	public void onCreate(@Nullable final Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		final WalletsViewModel walletsViewModel = ViewModelProviders
+			.of(this, viewModelFactory)
+			.get(WalletsViewModel.class);
 	}
 }

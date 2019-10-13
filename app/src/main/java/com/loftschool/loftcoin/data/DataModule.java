@@ -49,4 +49,7 @@ public interface DataModule {
 
 	@Binds
 	Currencies currencies(CurrenciesImpl impl);
+
+	@Binds
+	WalletsRepository walletsRepository(WalletsRepositoryImpl impl);
 }
