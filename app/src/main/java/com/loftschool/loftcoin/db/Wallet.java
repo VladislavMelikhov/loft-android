@@ -36,10 +36,10 @@ public abstract class Wallet implements StableId {
 	@AutoValue
 	@DatabaseView(
 		viewName = "wallets_view",
-		value = "SELECT w.id, c.symbol," +
-				"w.balance AS balance1," +
-				"w.balance * c.price AS balance2," +
-				"w.coin_id AS coinId" +
+		value = "SELECT w.id, c.symbol, " +
+				"w.balance AS balance1, " +
+				"w.balance * c.price AS balance2, " +
+				"w.coin_id AS coinId " +
 				"FROM wallets AS w INNER JOIN coins AS c ON w.coin_id = c.id"
 	)
 	public static abstract class View implements StableId {
