@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.loftschool.loftcoin.R;
 import com.loftschool.loftcoin.presentation.ConverterFragment;
-import com.loftschool.loftcoin.presentation.WalletFragment;
+import com.loftschool.loftcoin.presentation.wallets.WalletFragment;
 import com.loftschool.loftcoin.presentation.rates.ExchangeRatesFragment;
 import com.loftschool.loftcoin.util.Supplier;
 

@@ -1,4 +1,4 @@
-package com.loftschool.loftcoin.presentation;
+package com.loftschool.loftcoin.presentation.wallets;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

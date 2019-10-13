@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.loftschool.loftcoin.R;
-import com.loftschool.loftcoin.presentation.WalletFragment;
+import com.loftschool.loftcoin.presentation.wallets.WalletFragment;
 
 public final class WalletFragmentFactory implements MainFragmentFactory {
 
