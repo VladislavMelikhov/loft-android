@@ -6,6 +6,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -23,4 +24,10 @@ public interface WalletsDao {
 
 	@Insert
 	Single<Long> insertWallet(Wallet wallet);
+
+	@Query("SELECT * FROM transactions_view WHERE wallet_id = :walletId ORDER BY timestamp DESC")
+	Observable<List<Transaction.View>> fetchAllTransactions(long walletId);
+
+	@Insert
+	Completable insertTransactions(List<Transaction> transactions);
 }

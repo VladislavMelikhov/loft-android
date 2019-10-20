@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.loftschool.loftcoin.db.CoinEntity;
 import com.loftschool.loftcoin.db.LoftDb;
+import com.loftschool.loftcoin.db.Transaction;
 import com.loftschool.loftcoin.db.Wallet;
 import com.loftschool.loftcoin.db.WalletsDao;
 
@@ -12,6 +13,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -42,5 +44,18 @@ public final class WalletsRepositoryImpl implements WalletsRepository {
 	public Single<Long> saveWallet(@NonNull Wallet wallet) {
 		Objects.requireNonNull(wallet);
 		return wallets.insertWallet(wallet);
+	}
+
+	@NonNull
+	@Override
+	public Observable<List<Transaction.View>> transactions(final long walletId) {
+		return wallets.fetchAllTransactions(walletId);
+	}
+
+	@NonNull
+	@Override
+	public Completable saveTransactions(@NonNull final List<Transaction> transactions) {
+		Objects.requireNonNull(transactions);
+		return wallets.insertTransactions(transactions);
 	}
 }

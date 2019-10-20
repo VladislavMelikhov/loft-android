@@ -6,10 +6,12 @@ import androidx.room.RoomDatabase;
 @Database(
 	entities = {
 		CoinEntity.class,
-		Wallet.class
+		Wallet.class,
+		Transaction.class
 	},
 	views = {
-		Wallet.View.class
+		Wallet.View.class,
+		Transaction.View.class
 	},
 	version = 1
 )
