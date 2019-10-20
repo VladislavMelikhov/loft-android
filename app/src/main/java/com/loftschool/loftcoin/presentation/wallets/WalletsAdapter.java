@@ -35,7 +35,7 @@ public final class WalletsAdapter extends ListAdapter<Wallet.View, WalletsAdapte
 		this.imageLoader = Objects.requireNonNull(imageLoader);
 		this.priceFormatter = Objects.requireNonNull(priceFormatter);
 		this.imageUrlFormatter = Objects.requireNonNull(imageUrlFormatter);
-
+		setHasStableIds(true);
 	}
 
 	@Override

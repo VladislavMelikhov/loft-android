@@ -22,13 +22,13 @@
         tools:visibility="invisible" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_wallets"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="32dp"
         android:paddingEnd="32dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

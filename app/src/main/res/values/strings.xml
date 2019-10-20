@@ -26,4 +26,6 @@
     <string name="eur">Евро</string>
     <string name="rub">Рубль</string>
 
+    <string name="wallet_created">Кошелёк был создан</string>
+
 </resources>

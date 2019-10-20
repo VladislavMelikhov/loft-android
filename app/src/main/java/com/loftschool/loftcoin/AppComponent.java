@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.loftschool.loftcoin.data.CoinsRepository;
 import com.loftschool.loftcoin.data.Currencies;
 import com.loftschool.loftcoin.data.DataModule;
+import com.loftschool.loftcoin.data.WalletsRepository;
 import com.loftschool.loftcoin.rx.RxModule;
 import com.loftschool.loftcoin.rx.RxSchedulers;
 
@@ -39,6 +40,8 @@ public interface AppComponent {
 	Locale locale();
 
 	CoinsRepository coinsRepository();
+
+	WalletsRepository walletsRepository();
 
 	Currencies currencies();
 

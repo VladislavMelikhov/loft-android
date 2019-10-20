@@ -4,21 +4,50 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.loftschool.loftcoin.R;
+import com.loftschool.loftcoin.domain.ImageLoader;
+import com.loftschool.loftcoin.domain.ImageUrlFormatter;
+import com.loftschool.loftcoin.domain.PriceFormatter;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public final class WalletsFragment extends Fragment {
+
+	private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+	private RecyclerView rv_wallets;
+
+	private SnapHelper snapHelper;
+
+	private WalletsViewModel walletsViewModel;
+
+	@Inject
+	ImageLoader imageLoader;
+
+	@Inject
+	PriceFormatter priceFormatter;
+
+	@Inject
+	ImageUrlFormatter imageUrlFormatter;
 
 	@Inject
 	ViewModelProvider.Factory viewModelFactory;
@@ -32,6 +61,41 @@ public final class WalletsFragment extends Fragment {
 			R.layout.fragment_wallets,
 			container,
 			false
+		);
+	}
+
+	@Override
+	public void onViewCreated(@NonNull final View view,
+	                          @Nullable final Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		rv_wallets = view.findViewById(R.id.rv_wallets);
+		rv_wallets.setLayoutManager(new LinearLayoutManager(
+			view.getContext(),
+			LinearLayoutManager.HORIZONTAL,
+			false
+		));
+
+		snapHelper = new PagerSnapHelper();
+		snapHelper.attachToRecyclerView(rv_wallets);
+
+		final WalletsAdapter walletsAdapter = new WalletsAdapter(
+			getLayoutInflater(),
+			imageLoader,
+			priceFormatter,
+			imageUrlFormatter
+		);
+
+		rv_wallets.swapAdapter(walletsAdapter, false);
+
+		final View iv_wallet_card = view.findViewById(R.id.iv_wallet_card);
+		compositeDisposable.add(
+			walletsViewModel
+				.wallets()
+				.subscribe(wallets -> {
+					iv_wallet_card.setVisibility(wallets.isEmpty() ? View.VISIBLE : View.GONE);
+					walletsAdapter.submitList(wallets);
+				})
 		);
 	}
 
@@ -52,8 +116,39 @@ public final class WalletsFragment extends Fragment {
 	public void onCreate(@Nullable final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		final WalletsViewModel walletsViewModel = ViewModelProviders
+		DaggerWalletsComponent
+			.builder()
+			.fragment(this)
+			.build()
+			.inject(this);
+
+		walletsViewModel = ViewModelProviders
 			.of(this, viewModelFactory)
 			.get(WalletsViewModel.class);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(@NonNull final MenuItem item) {
+		Objects.requireNonNull(item);
+
+		if (R.id.add_wallet == item.getItemId()) {
+			compositeDisposable.add(
+				walletsViewModel
+					.createNewWallet()
+					.subscribe(
+						x -> Toast.makeText(requireContext(), R.string.wallet_created, Toast.LENGTH_SHORT).show(),
+						e -> Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT).show()
+					)
+			);
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onDestroyView() {
+		snapHelper.attachToRecyclerView(null);
+		rv_wallets.swapAdapter(null, false);
+		super.onDestroyView();
 	}
 }
