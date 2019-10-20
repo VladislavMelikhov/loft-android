@@ -37,6 +37,8 @@ public final class WalletsFragment extends Fragment {
 
 	private RecyclerView rv_wallets;
 
+	private RecyclerView rv_transactions;
+
 	private SnapHelper snapHelper;
 
 	private WalletsViewModel walletsViewModel;
@@ -99,6 +101,23 @@ public final class WalletsFragment extends Fragment {
 					walletsAdapter.submitList(wallets);
 				})
 		);
+
+		rv_transactions = view.findViewById(R.id.rv_transactions);
+		rv_transactions.setLayoutManager(new LinearLayoutManager(view.getContext()));
+		rv_transactions.setHasFixedSize(true);
+
+		final TransactionsAdapter transactionsAdapter = new TransactionsAdapter(
+			getLayoutInflater(),
+			priceFormatter
+		);
+
+		rv_transactions.swapAdapter(transactionsAdapter, false);
+
+		compositeDisposable.add(
+			walletsViewModel
+				.transactions()
+				.subscribe(transactionsAdapter::submitList)
+		);
 	}
 
 	@Override
@@ -138,7 +157,7 @@ public final class WalletsFragment extends Fragment {
 				walletsViewModel
 					.createNewWallet()
 					.subscribe(
-						x -> Toast.makeText(requireContext(), R.string.wallet_created, Toast.LENGTH_SHORT).show(),
+						() -> Toast.makeText(requireContext(), R.string.wallet_created, Toast.LENGTH_SHORT).show(),
 						e -> Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT).show()
 					)
 			);
@@ -151,6 +170,8 @@ public final class WalletsFragment extends Fragment {
 	public void onDestroyView() {
 		snapHelper.attachToRecyclerView(null);
 		rv_wallets.swapAdapter(null, false);
+		rv_transactions.swapAdapter(null, false);
+		compositeDisposable.dispose();
 		super.onDestroyView();
 	}
 }

@@ -1,10 +1,8 @@
 package com.loftschool.loftcoin.domain;
 
 import androidx.annotation.NonNull;
-import androidx.core.util.Pair;
 
 import com.loftschool.loftcoin.data.Currencies;
-import com.loftschool.loftcoin.data.Currency;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -27,15 +25,21 @@ public final class PriceFormatterImpl implements PriceFormatter {
 		this.localeProvider = Objects.requireNonNull(localeProvider);
 	}
 
-	@NonNull
+	@Override
 	public String format(final double value) {
-		final Currency currency = currencies.getCurrent();
+		return format(value, currencies.getCurrent().getSign());
+	}
+
+	@NonNull
+	public String format(final double value,
+	                     @NonNull final String sign) {
+		Objects.requireNonNull(sign);
 		final Locale locale = localeProvider.get();
 
 		final NumberFormat format = NumberFormat.getCurrencyInstance(locale);
 		final DecimalFormat decimalFormat = (DecimalFormat) format;
 		final DecimalFormatSymbols symbols = decimalFormat.getDecimalFormatSymbols();
-		symbols.setCurrencySymbol(currency.getSign());
+		symbols.setCurrencySymbol(sign);
 		decimalFormat.setDecimalFormatSymbols(symbols);
 		return format.format(value);
 	}
