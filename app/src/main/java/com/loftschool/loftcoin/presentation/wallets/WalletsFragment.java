@@ -23,6 +23,7 @@ import com.loftschool.loftcoin.R;
 import com.loftschool.loftcoin.domain.ImageLoader;
 import com.loftschool.loftcoin.domain.ImageUrlFormatter;
 import com.loftschool.loftcoin.domain.PriceFormatter;
+import com.loftschool.loftcoin.view.PagerDecoration;
 
 import java.util.Objects;
 
@@ -75,6 +76,7 @@ public final class WalletsFragment extends Fragment {
 			LinearLayoutManager.HORIZONTAL,
 			false
 		));
+		rv_wallets.addItemDecoration(new PagerDecoration(view.getContext(), 16));
 
 		snapHelper = new PagerSnapHelper();
 		snapHelper.attachToRecyclerView(rv_wallets);
