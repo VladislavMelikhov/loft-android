@@ -20,6 +20,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
 
 public final class WalletsViewModel extends ViewModel {
 
@@ -27,6 +28,8 @@ public final class WalletsViewModel extends ViewModel {
 
 	private final WalletsRepository walletsRepository;
 	private final RxSchedulers schedulers;
+
+	private final BehaviorSubject<Long> walletId = BehaviorSubject.create();
 
 	@Inject
 	public WalletsViewModel(@NonNull final WalletsRepository walletsRepository,
@@ -39,6 +42,12 @@ public final class WalletsViewModel extends ViewModel {
 	Observable<List<Wallet.View>> wallets() {
 		return walletsRepository
 			.wallets()
+			.doOnNext(wallets -> {
+				final Long value = walletId.getValue();
+				if (value == null && !wallets.isEmpty()) {
+					walletId.onNext(wallets.get(0).id());
+				}
+			})
 			.subscribeOn(schedulers.io())
 			.observeOn(schedulers.main());
 	}
@@ -57,10 +66,15 @@ public final class WalletsViewModel extends ViewModel {
 
 	@NonNull
 	Observable<List<Transaction.View>> transactions() {
-		return walletsRepository
-			.transactions(1)
+		return walletId
+			.distinctUntilChanged()
+			.flatMap(walletsRepository::transactions)
 			.subscribeOn(schedulers.io())
 			.observeOn(schedulers.main());
+	}
+
+	void submitWalletId(final long id) {
+		walletId.onNext(id);
 	}
 
 	@NonNull

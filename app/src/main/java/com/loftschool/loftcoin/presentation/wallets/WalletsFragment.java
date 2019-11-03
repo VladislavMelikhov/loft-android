@@ -41,6 +41,8 @@ public final class WalletsFragment extends Fragment {
 
 	private SnapHelper snapHelper;
 
+	private RecyclerView.OnScrollListener onWalletsScroll;
+
 	private WalletsViewModel walletsViewModel;
 
 	@Inject
@@ -82,6 +84,19 @@ public final class WalletsFragment extends Fragment {
 
 		snapHelper = new PagerSnapHelper();
 		snapHelper.attachToRecyclerView(rv_wallets);
+
+		onWalletsScroll = new RecyclerView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+				if (RecyclerView.SCROLL_STATE_IDLE == newState) {
+					final View snapView = snapHelper.findSnapView(recyclerView.getLayoutManager());
+					if (snapView != null) {
+						walletsViewModel.submitWalletId(recyclerView.getChildItemId(snapView));
+					}
+				}
+			}
+		};
+		rv_wallets.addOnScrollListener(onWalletsScroll);
 
 		final WalletsAdapter walletsAdapter = new WalletsAdapter(
 			getLayoutInflater(),
@@ -170,6 +185,7 @@ public final class WalletsFragment extends Fragment {
 	public void onDestroyView() {
 		snapHelper.attachToRecyclerView(null);
 		rv_wallets.swapAdapter(null, false);
+		rv_wallets.removeOnScrollListener(onWalletsScroll);
 		rv_transactions.swapAdapter(null, false);
 		compositeDisposable.dispose();
 		super.onDestroyView();
