@@ -13,6 +13,8 @@ android {
         buildConfigField "String", "CMC_API_KEY", "\"${pCoinMarketCapKey}\""
         buildConfigField "String", "CMC_API_ENDPOINT", '"https://pro-api.coinmarketcap.com/v1/"'
         buildConfigField "String", "CMC_IMG_ENDPOINT", '"https://s2.coinmarketcap.com/static/img/"'
+
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -63,4 +65,11 @@ dependencies {
 
     implementation "io.reactivex.rxjava2:rxjava:2.2.12"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+    implementation "com.google.firebase:firebase-firestore:21.0.0"
+    implementation "com.google.firebase:firebase-messaging:20.0.0"
+
+    implementation "androidx.multidex:multidex:2.0.1"
 }
+
+apply plugin: 'com.google.gms.google-services'
