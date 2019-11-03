@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,8 +29,6 @@ public final class CurrencyDialog extends DialogFragment {
 
 	@Inject
 	ViewModelProvider.Factory viewModelFactory;
-
-	private RatesViewModel ratesViewModel;
 
 	@Nullable
 	@Override
@@ -59,10 +56,6 @@ public final class CurrencyDialog extends DialogFragment {
 			.fragment(parentFragment)
 			.build()
 			.inject(this);
-
-		ratesViewModel = ViewModelProviders
-			.of(parentFragment, viewModelFactory)
-			.get(RatesViewModel.class);
 	}
 
 	@Override
@@ -80,7 +73,7 @@ public final class CurrencyDialog extends DialogFragment {
 				getLayoutInflater(),
 				currencies,
 				currency -> {
-					ratesViewModel.updateCurrency(currency);
+					currencies.setCurrent(currency);
 					dismissAllowingStateLoss();
 				}
 			)

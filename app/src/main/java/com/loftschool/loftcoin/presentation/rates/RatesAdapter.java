@@ -91,7 +91,6 @@ public final class RatesAdapter extends ListAdapter<CoinEntity, RatesAdapter.Vie
 	                             final int position) {
 		holder.bind(
 			getItem(position),
-			imageLoader,
 			position % 2 == 0
 		);
 	}
@@ -128,10 +127,8 @@ public final class RatesAdapter extends ListAdapter<CoinEntity, RatesAdapter.Vie
 		}
 
 		private void bind(@NonNull final CoinEntity rate,
-		                  @NonNull final ImageLoader imageLoader,
 		                  final boolean isEven) {
 			Objects.requireNonNull(rate);
-			Objects.requireNonNull(imageLoader);
 
 			tv_symbol.setText(rate.symbol());
 			tv_price.setText(priceFormatter.format(rate.price()));

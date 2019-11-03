@@ -11,15 +11,18 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+
 public class CurrenciesImpl implements Currencies {
 
 	private static final String KEY_CODE = "code";
 
-	private final Context context;
+	private final SharedPreferences preferences;
 
 	@Inject
 	CurrenciesImpl(@NonNull final Context context) {
-		this.context = Objects.requireNonNull(context);
+		Objects.requireNonNull(context);
+		this.preferences = context.getSharedPreferences("currencies", Context.MODE_PRIVATE);
 	}
 
 	@NonNull
@@ -31,7 +34,7 @@ public class CurrenciesImpl implements Currencies {
 	@Override
 	public void setCurrent(@NonNull final Currency currency) {
 		Objects.requireNonNull(currency);
-		getPreferences()
+		preferences
 			.edit()
 			.putString(KEY_CODE, currency.getCode())
 			.apply();
@@ -41,11 +44,20 @@ public class CurrenciesImpl implements Currencies {
 	@Override
 	public Currency getCurrent() {
 		return Currency.valueOf(
-			getPreferences().getString(KEY_CODE, Currency.USD.getCode())
+			preferences.getString(KEY_CODE, Currency.USD.getCode())
 		);
 	}
 
-	private SharedPreferences getPreferences() {
-		return context.getSharedPreferences("currencies", Context.MODE_PRIVATE);
+	@NonNull
+	@Override
+	public Observable<Currency> current() {
+		return Observable.create(emitter -> {
+			final SharedPreferences.OnSharedPreferenceChangeListener listener = (prefs, key) -> {
+				emitter.onNext(getCurrent());
+			};
+			emitter.setCancellable(() -> preferences.unregisterOnSharedPreferenceChangeListener(listener));
+			preferences.registerOnSharedPreferenceChangeListener(listener);
+			emitter.onNext(getCurrent());
+		});
 	}
 }

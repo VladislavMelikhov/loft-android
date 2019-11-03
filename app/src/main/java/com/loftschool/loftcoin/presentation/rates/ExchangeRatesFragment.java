@@ -19,8 +19,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.loftschool.loftcoin.R;
+import com.loftschool.loftcoin.db.CoinEntity;
+
+import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.CompositeDisposable;
 
 public final class ExchangeRatesFragment extends Fragment {
 
@@ -29,6 +34,8 @@ public final class ExchangeRatesFragment extends Fragment {
 
 	@Inject
 	RatesAdapter ratesAdapter;
+
+	private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 	@Nullable
 	@Override
@@ -66,28 +73,21 @@ public final class ExchangeRatesFragment extends Fragment {
 
 		rl_rates.setOnRefreshListener(ratesViewModel::refresh);
 
-		ratesViewModel
-			.getCoinRates()
-			.observe(
-				getViewLifecycleOwner(),
-				ratesAdapter::submitList
-			);
-
-		ratesViewModel
-			.getLoadingState()
-			.observe(
-				getViewLifecycleOwner(),
-				rl_rates::setRefreshing
-			);
-
-		ratesViewModel
-			.getErrorState()
-			.observe(
-				getViewLifecycleOwner(),
-				error -> {
-					Snackbar.make(view, error.getMessage(), Snackbar.LENGTH_SHORT).show();
-				}
-			);
+		compositeDisposable.add(
+			ratesViewModel
+				.uiState()
+				.subscribe(state -> {
+					rl_rates.setRefreshing(state.isRefreshing());
+					final List<CoinEntity> rates = state.rates();
+					if (!rates.isEmpty()) {
+						ratesAdapter.submitList(rates);
+					}
+					final String errorMessage = state.error();
+					if (errorMessage != null) {
+						Snackbar.make(view, errorMessage, Snackbar.LENGTH_SHORT).show();
+					}
+				})
+		);
 	}
 
 	@Override
@@ -111,5 +111,11 @@ public final class ExchangeRatesFragment extends Fragment {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		compositeDisposable.clear();
 	}
 }

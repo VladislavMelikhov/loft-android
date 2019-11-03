@@ -12,6 +12,7 @@ import dagger.Provides;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
@@ -38,6 +39,7 @@ public interface DataModule {
 			.client(okHttpClient)
 			.baseUrl(BuildConfig.CMC_API_ENDPOINT)
 			.addConverterFactory(GsonConverterFactory.create())
+			.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 			.build()
 			.create(CoinMarketCapApi.class);
 	}
@@ -47,4 +49,7 @@ public interface DataModule {
 
 	@Binds
 	Currencies currencies(CurrenciesImpl impl);
+
+	@Binds
+	WalletsRepository walletsRepository(WalletsRepositoryImpl impl);
 }
