@@ -19,7 +19,7 @@ import com.loftschool.loftcoin.domain.PriceFormatter;
 
 import java.util.Objects;
 
-public final class WalletsAdapter extends ListAdapter<Wallet.View, WalletsAdapter.ViewHolder> {
+public final class WalletsAdapter extends ListAdapter<Wallet, WalletsAdapter.ViewHolder> {
 
 	private final LayoutInflater layoutInflater;
 	private final ImageLoader imageLoader;
@@ -40,7 +40,7 @@ public final class WalletsAdapter extends ListAdapter<Wallet.View, WalletsAdapte
 
 	@Override
 	public long getItemId(final int position) {
-		return Objects.requireNonNull(getItem(position)).id();
+		return Objects.requireNonNull(getItem(position)).coin().id();
 	}
 
 	@NonNull
@@ -90,15 +90,15 @@ public final class WalletsAdapter extends ListAdapter<Wallet.View, WalletsAdapte
 			tv_balance2 = itemView.findViewById(R.id.tv_balance2);
 		}
 
-		private void bind(@NonNull final Wallet.View wallet) {
+		private void bind(@NonNull final Wallet wallet) {
 			Objects.requireNonNull(wallet);
 
 			imageLoader.loadImage(
-				imageUrlFormatter.format(wallet.coinId()),
+				imageUrlFormatter.format(wallet.coin().id()),
 				iv_logo
 			);
 
-			tv_symbol.setText(wallet.symbol());
+			tv_symbol.setText(wallet.coin().symbol());
 			tv_balance1.setText(priceFormatter.format(wallet.balance1()));
 			tv_balance2.setText(priceFormatter.format(wallet.balance2()));
 		}

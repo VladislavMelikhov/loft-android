@@ -20,7 +20,7 @@ import com.loftschool.loftcoin.domain.PriceFormatter;
 
 import java.util.Objects;
 
-public final class TransactionsAdapter extends ListAdapter<Transaction.View, TransactionsAdapter.ViewHolder> {
+public final class TransactionsAdapter extends ListAdapter<Transaction, TransactionsAdapter.ViewHolder> {
 
 	private final LayoutInflater layoutInflater;
 	private final PriceFormatter priceFormatter;
@@ -72,10 +72,10 @@ public final class TransactionsAdapter extends ListAdapter<Transaction.View, Tra
 			this.priceFormatter = Objects.requireNonNull(priceFormatter);
 		}
 
-		void bind(@NonNull final Transaction.View transaction) {
+		void bind(@NonNull final Transaction transaction) {
 			Objects.requireNonNull(transaction);
 
-			tv_amount1.setText(priceFormatter.format(transaction.amount1(), transaction.symbol()));
+			tv_amount1.setText(priceFormatter.format(transaction.amount1(), transaction.wallet().coin().symbol()));
 			tv_amount2.setText(priceFormatter.format(transaction.amount2()));
 
 			final Context context = itemView.getContext();
@@ -88,13 +88,13 @@ public final class TransactionsAdapter extends ListAdapter<Transaction.View, Tra
 
 			tv_timestamp.setText(DateUtils.formatDateTime(
 				context,
-				transaction.timestamp(),
+				transaction.timestamp().getTime(),
 				DateUtils.FORMAT_SHOW_YEAR
 			));
 		}
 
 		@ColorRes
-		private int getChangeColor(@NonNull final Transaction.View transaction) {
+		private int getChangeColor(@NonNull final Transaction transaction) {
 			Objects.requireNonNull(transaction);
 
 			if (transaction.amount2() < 0) {

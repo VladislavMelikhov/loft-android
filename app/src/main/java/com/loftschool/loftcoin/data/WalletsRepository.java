@@ -15,17 +15,14 @@ import io.reactivex.Single;
 public interface WalletsRepository {
 
 	@NonNull
-	Observable<List<Wallet.View>> wallets();
+	Observable<List<Wallet>> wallets();
 
 	@NonNull
-	Single<CoinEntity> findNextCoin();
+	Observable<List<Transaction>> transactions(@NonNull Wallet wallet);
 
 	@NonNull
-	Single<Long> saveWallet(@NonNull Wallet wallet);
+	Single<CoinEntity> findNextCoin(@NonNull List<Long> exclude);
 
 	@NonNull
-	Observable<List<Transaction.View>> transactions(long walletId);
-
-	@NonNull
-	Completable saveTransactions(@NonNull List<Transaction> transactions);
+	Completable saveWallet(@NonNull Wallet wallet);
 }

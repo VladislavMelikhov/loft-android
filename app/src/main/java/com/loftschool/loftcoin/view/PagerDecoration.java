@@ -14,12 +14,14 @@ import java.util.Objects;
 public final class PagerDecoration extends RecyclerView.ItemDecoration {
 
 	private final int dividerWidth;
+	private final int screenWidth;
 
 	public PagerDecoration(@NonNull final Context context,
 	                       final float dip) {
 		Objects.requireNonNull(context);
 		final DisplayMetrics dm = context.getResources().getDisplayMetrics();
 		dividerWidth = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, dm));
+		screenWidth = dm.widthPixels;
 	}
 
 	@Override
@@ -28,8 +30,13 @@ public final class PagerDecoration extends RecyclerView.ItemDecoration {
 	                           @NonNull final RecyclerView parent,
 	                           @NonNull final RecyclerView.State state) {
 		final int position = parent.getChildAdapterPosition(view);
+		final int viewHalfWidth = view.getLayoutParams().width / 2;
+		final int screenHalfWidth = screenWidth / 2;
+
 		if (position == 0) {
-			outRect.set(dividerWidth, 0, dividerWidth, 0);
+			outRect.set(screenHalfWidth - viewHalfWidth, 0, dividerWidth, 0);
+		} else if (position == state.getItemCount() - 1) {
+			outRect.set(0, 0, screenHalfWidth - viewHalfWidth, 0);
 		} else {
 			outRect.set(0, 0, dividerWidth, 0);
 		}

@@ -1,5 +1,5 @@
 package com.loftschool.loftcoin.db;
 
-public interface StableId {
-	long id();
+public interface StableId<T> {
+	T id();
 }
