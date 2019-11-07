@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.loftschool.loftcoin.db.CoinEntity;
 import com.loftschool.loftcoin.db.LoftDb;
@@ -42,7 +43,7 @@ public final class WalletsRepositoryImpl implements WalletsRepository {
 	public Observable<List<Wallet>> wallets() {
 		return Observable
 			.<List<DocumentSnapshot>>create(emitter -> {
-				firestore
+				final ListenerRegistration registration = firestore
 					.collection("wallets")
 					.orderBy("created", Query.Direction.ASCENDING)
 					.addSnapshotListener(ioExecutor, (snapshots, e) -> {
@@ -54,6 +55,7 @@ public final class WalletsRepositoryImpl implements WalletsRepository {
 							emitter.tryOnError(e);
 						}
 					});
+				emitter.setCancellable(registration::remove);
 			})
 			.flatMapSingle(documents -> Observable
 				.fromIterable(documents)
