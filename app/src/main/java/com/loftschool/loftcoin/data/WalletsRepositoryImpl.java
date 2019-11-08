@@ -20,6 +20,8 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
 
 public final class WalletsRepositoryImpl implements WalletsRepository {
@@ -42,21 +44,10 @@ public final class WalletsRepositoryImpl implements WalletsRepository {
 	@Override
 	public Observable<List<Wallet>> wallets() {
 		return Observable
-			.<List<DocumentSnapshot>>create(emitter -> {
-				final ListenerRegistration registration = firestore
-					.collection("wallets")
-					.orderBy("created", Query.Direction.ASCENDING)
-					.addSnapshotListener(ioExecutor, (snapshots, e) -> {
-						if (snapshots != null) {
-							if (!emitter.isDisposed()) {
-								emitter.onNext(snapshots.getDocuments());
-							}
-						} else if (e != null) {
-							emitter.tryOnError(e);
-						}
-					});
-				emitter.setCancellable(registration::remove);
-			})
+			.create(new QueryOnSubscribe(ioExecutor, firestore
+				.collection("wallets")
+				.orderBy("created", Query.Direction.ASCENDING)
+			))
 			.flatMapSingle(documents -> Observable
 				.fromIterable(documents)
 				.flatMapSingle(document ->
@@ -75,7 +66,23 @@ public final class WalletsRepositoryImpl implements WalletsRepository {
 	@NonNull
 	@Override
 	public Observable<List<Transaction>> transactions(@NonNull final Wallet wallet) {
-		return Observable.empty();
+		return Observable
+			.create(new QueryOnSubscribe(ioExecutor, firestore
+				.collection("wallets")
+				.document(wallet.id())
+				.collection("transactions")
+				.orderBy("timestamp", Query.Direction.DESCENDING)
+			))
+			.flatMapSingle(documents -> Observable
+				.fromIterable(documents)
+				.map(document -> Transaction.create(
+					document.getId(),
+					document.getDouble("amount"),
+					document.getDate("timestamp"),
+					wallet
+				))
+				.toList()
+			);
 	}
 
 	@NonNull
