@@ -9,6 +9,9 @@ import com.loftschool.loftcoin.data.CoinsRepository;
 import com.loftschool.loftcoin.data.Currencies;
 import com.loftschool.loftcoin.data.DataModule;
 import com.loftschool.loftcoin.data.WalletsRepository;
+import com.loftschool.loftcoin.fcm.FcmChannel;
+import com.loftschool.loftcoin.fcm.FcmModule;
+import com.loftschool.loftcoin.fcm.FcmService;
 import com.loftschool.loftcoin.rx.RxModule;
 import com.loftschool.loftcoin.rx.RxSchedulers;
 
@@ -24,7 +27,8 @@ import dagger.Component;
 @Component(modules = {
 	AppModule.class,
 	DataModule.class,
-	RxModule.class
+	RxModule.class,
+	FcmModule.class
 })
 public interface AppComponent {
 
@@ -37,6 +41,8 @@ public interface AppComponent {
 		throw new IllegalStateException("Application should be an instance of LoftApp");
 	}
 
+	void inject(FcmService service);
+
 	Locale locale();
 
 	CoinsRepository coinsRepository();
@@ -46,6 +52,8 @@ public interface AppComponent {
 	Currencies currencies();
 
 	RxSchedulers schedulers();
+
+	FcmChannel fcmChannel();
 
 	@Component.Factory
 	interface Factory {
