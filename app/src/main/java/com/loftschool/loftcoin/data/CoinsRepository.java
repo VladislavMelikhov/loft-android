@@ -12,4 +12,7 @@ public interface CoinsRepository {
 
 	@NonNull
 	Observable<List<CoinEntity>> listings(@NonNull String convert);
+
+	@NonNull
+	Observable<List<CoinEntity>> top(int limit);
 }
