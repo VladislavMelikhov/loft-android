@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,10 +14,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.loftschool.loftcoin.R;
+import com.loftschool.loftcoin.db.CoinEntity;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public final class ConverterFragment extends Fragment {
+
+	private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 	@Inject
 	ViewModelProvider.Factory viewModelFactory;
@@ -47,5 +54,51 @@ public final class ConverterFragment extends Fragment {
 		converterViewModel = ViewModelProviders
 			.of(this, viewModelFactory)
 			.get(ConverterViewModel.class);
+	}
+
+	@Override
+	public void onViewCreated(@NonNull final View view,
+	                          @Nullable final Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		final TextView tv_from_coin = view.findViewById(R.id.tv_from_coin);
+		final TextView tv_to_coin = view.findViewById(R.id.tv_to_coin);
+
+		compositeDisposable.add(
+			converterViewModel
+				.fromCoin()
+				.map(CoinEntity::symbol)
+				.subscribe(tv_from_coin::setText)
+		);
+
+		compositeDisposable.add(
+			converterViewModel
+				.toCoin()
+				.map(CoinEntity::symbol)
+				.subscribe(tv_to_coin::setText)
+		);
+
+		final EditText et_from = view.findViewById(R.id.et_from);
+		final EditText et_to = view.findViewById(R.id.et_to);
+
+		compositeDisposable.add(
+			converterViewModel
+				.fromValue()
+				.filter(value -> !et_from.hasFocus())
+				.subscribe(et_from::setText)
+		);
+
+		compositeDisposable.add(
+			converterViewModel
+				.fromValue()
+				.filter(value -> !et_to.hasFocus())
+				.subscribe(et_to::setText)
+		);
+	}
+
+	@Override
+	public void onDestroyView() {
+		compositeDisposable.clear();
+		super.onDestroyView();
 	}
 }

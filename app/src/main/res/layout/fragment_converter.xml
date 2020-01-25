@@ -16,7 +16,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/from"
+            android:id="@+id/et_from"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -28,7 +28,7 @@
             tools:text="@sample/ListingsLatest.json/data/quote/USD/price" />
 
         <TextView
-            android:id="@+id/from_coin"
+            android:id="@+id/tv_from_coin"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
@@ -48,7 +48,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/to"
+            android:id="@+id/et_to"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -60,7 +60,7 @@
             tools:text="@sample/ListingsLatest.json/data/quote/USD/price" />
 
         <TextView
-            android:id="@+id/to_coin"
+            android:id="@+id/tv_to_coin"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
