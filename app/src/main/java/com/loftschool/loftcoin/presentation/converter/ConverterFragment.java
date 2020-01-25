@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.loftschool.loftcoin.R;
 import com.loftschool.loftcoin.db.CoinEntity;
 
@@ -90,9 +91,23 @@ public final class ConverterFragment extends Fragment {
 
 		compositeDisposable.add(
 			converterViewModel
-				.fromValue()
+				.toValue()
 				.filter(value -> !et_to.hasFocus())
 				.subscribe(et_to::setText)
+		);
+
+		compositeDisposable.add(
+			RxTextView
+				.textChanges(et_from)
+				.map(CharSequence::toString)
+				.subscribe(converterViewModel::changeFromValue)
+		);
+
+		compositeDisposable.add(
+			RxTextView
+				.textChanges(et_to)
+				.map(CharSequence::toString)
+				.subscribe(converterViewModel::changeToValue)
 		);
 	}
 
