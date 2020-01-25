@@ -1,6 +1,7 @@
 package com.loftschool.loftcoin.presentation.converter;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
 
 import com.loftschool.loftcoin.data.CoinsRepository;
 import com.loftschool.loftcoin.db.CoinEntity;
@@ -17,7 +18,7 @@ import io.reactivex.ObservableTransformer;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
-public final class ConverterViewModel {
+public final class ConverterViewModel extends ViewModel {
 
 	private final Subject<Integer> from = BehaviorSubject.createDefault(0);
 	private final Subject<Integer> to = BehaviorSubject.createDefault(1);

@@ -8,10 +8,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.loftschool.loftcoin.R;
 
+import javax.inject.Inject;
+
 public final class ConverterFragment extends Fragment {
+
+	@Inject
+	ViewModelProvider.Factory viewModelFactory;
+
+	private ConverterViewModel converterViewModel;
 
 	@Nullable
 	@Override
@@ -23,5 +32,20 @@ public final class ConverterFragment extends Fragment {
 			container,
 			false
 		);
+	}
+
+	@Override
+	public void onCreate(@Nullable final Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		DaggerConverterComponent
+			.builder()
+			.fragment(this)
+			.build()
+			.inject(this);
+
+		converterViewModel = ViewModelProviders
+			.of(this, viewModelFactory)
+			.get(ConverterViewModel.class);
 	}
 }
