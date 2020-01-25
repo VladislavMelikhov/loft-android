@@ -91,7 +91,7 @@ public final class WalletsFragment extends Fragment {
 				if (RecyclerView.SCROLL_STATE_IDLE == newState) {
 					final View snapView = snapHelper.findSnapView(recyclerView.getLayoutManager());
 					if (snapView != null) {
-						walletsViewModel.submitWalletId(recyclerView.getChildItemId(snapView));
+						walletsViewModel.submitWalletPosition(recyclerView.getChildAdapterPosition(snapView));
 					}
 				}
 			}
@@ -114,6 +114,7 @@ public final class WalletsFragment extends Fragment {
 				.subscribe(wallets -> {
 					iv_wallet_card.setVisibility(wallets.isEmpty() ? View.VISIBLE : View.GONE);
 					walletsAdapter.submitList(wallets);
+					rv_wallets.invalidateItemDecorations();
 				})
 		);
 
@@ -170,7 +171,7 @@ public final class WalletsFragment extends Fragment {
 		if (R.id.add_wallet == item.getItemId()) {
 			compositeDisposable.add(
 				walletsViewModel
-					.createNewWallet()
+					.createNextWallet()
 					.subscribe(
 						() -> Toast.makeText(requireContext(), R.string.wallet_created, Toast.LENGTH_SHORT).show(),
 						e -> Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT).show()

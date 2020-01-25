@@ -1,15 +1,15 @@
 package com.loftschool.loftcoin;
 
-import android.app.Application;
 import android.os.StrictMode;
 
 import androidx.annotation.NonNull;
+import androidx.multidex.MultiDexApplication;
 
 import com.loftschool.loftcoin.log.DebugTree;
 
 import timber.log.Timber;
 
-public final class LoftApp extends Application {
+public final class LoftApp extends MultiDexApplication {
 
 	private AppComponent appComponent = null;
 
