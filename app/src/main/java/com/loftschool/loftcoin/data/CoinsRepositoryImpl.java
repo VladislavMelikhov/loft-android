@@ -74,6 +74,7 @@ public final class CoinsRepositoryImpl implements CoinsRepository {
 				}
 				entities.add(CoinEntity.create(
 					coin.getId(),
+					coin.getName(),
 					coin.getSymbol(),
 					price,
 					change24

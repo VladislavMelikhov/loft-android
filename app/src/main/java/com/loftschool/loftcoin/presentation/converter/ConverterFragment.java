@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.jakewharton.rxbinding3.view.RxView;
 import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.loftschool.loftcoin.R;
 import com.loftschool.loftcoin.db.CoinEntity;
@@ -77,6 +78,18 @@ public final class ConverterFragment extends Fragment {
 				.toCoin()
 				.map(CoinEntity::symbol)
 				.subscribe(tv_to_coin::setText)
+		);
+
+		compositeDisposable.add(
+			RxView
+				.clicks(tv_from_coin)
+				.subscribe(none -> CoinsSheetDialog.chooseFromCoin(getChildFragmentManager()))
+		);
+
+		compositeDisposable.add(
+			RxView
+				.clicks(tv_to_coin)
+				.subscribe(none -> CoinsSheetDialog.chooseToCoin(getChildFragmentManager()))
 		);
 
 		final EditText et_from = view.findViewById(R.id.et_from);

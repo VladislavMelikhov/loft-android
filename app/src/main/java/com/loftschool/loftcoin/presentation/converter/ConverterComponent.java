@@ -19,6 +19,8 @@ public interface ConverterComponent {
 
 	void inject(ConverterFragment fmt);
 
+	void inject(CoinsSheetDialog fmt);
+
 	@Component.Builder
 	interface Builder {
 
