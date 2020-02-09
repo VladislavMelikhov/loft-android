@@ -31,6 +31,17 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">?attr/colorPrimary</item>
+        <item name="loftSurfaceColor">@null</item>
+        <item name="textAppearanceHeadline1">@style/TextAppearance.H1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.H2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.H3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.H4</item>
+    </style>
+
+    <style name="AppTheme.BottomSheet.Dialog" parent="Theme.MaterialComponents.BottomSheetDialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="loftSurfaceColor">@color/dark_four</item>
         <item name="textAppearanceHeadline1">@style/TextAppearance.H1</item>
         <item name="textAppearanceHeadline2">@style/TextAppearance.H2</item>
         <item name="textAppearanceHeadline3">@style/TextAppearance.H3</item>
@@ -72,6 +83,10 @@
     <declare-styleable name="AppTheme">
         <attr name="gradientButton" format="reference"/>
         <attr name="walletCardBackground" format="color|reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="AppTheme.Dialog">
+        <attr name="loftSurfaceColor" format="reference"/>
     </declare-styleable>
 
 </resources>

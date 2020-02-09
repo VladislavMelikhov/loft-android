@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.jakewharton.rxbinding3.view.RxView;
 import com.loftschool.loftcoin.R;
+import com.loftschool.loftcoin.rx.RxRecyclerView;
 
 import javax.inject.Inject;
 
@@ -50,6 +50,11 @@ public final class CoinsSheetDialog extends BottomSheetDialogFragment {
 		arguments.putInt(KEY_MODE, MODE_TO);
 		dialog.setArguments(arguments);
 		dialog.show(fm, CoinsSheetDialog.class.getSimpleName());
+	}
+
+	@Override
+	public int getTheme() {
+		return R.style.AppTheme_BottomSheet_Dialog;
 	}
 
 	@Override
@@ -92,7 +97,20 @@ public final class CoinsSheetDialog extends BottomSheetDialogFragment {
 				.subscribe(coinsSheetAdapter::submitList)
 		);
 
-
+		compositeDisposable.add(
+			RxRecyclerView
+				.onItemClick(rv_currencies)
+				.map(rv_currencies::getChildAdapterPosition)
+				.doOnNext(position -> {
+					if (MODE_FROM == mode) {
+						converterViewModel.changeFromCoin(position);
+					} else {
+						converterViewModel.changeToCoin(position);
+					}
+				})
+				.doOnNext(position -> dismissAllowingStateLoss())
+				.subscribe()
+		);
 	}
 
 	@Override

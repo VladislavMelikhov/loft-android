@@ -142,7 +142,7 @@ public final class ConverterViewModel extends ViewModel {
 		return upstream -> upstream
 			.distinctUntilChanged()
 			.map(value -> value.isEmpty() ? "0" : value)
-			.map(value -> value.trim().replace(',', '.'))
+			.map(value -> value.trim().replace(",", ""))
 			.map(value -> value.replaceAll("\\s+", ""))
 			.map(Double::parseDouble);
 	}
