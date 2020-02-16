@@ -67,7 +67,7 @@ public final class MainActivity extends AppCompatActivity {
 			});
 
 		if (savedInstanceState == null) {
-			mainRouter.navigateTo(R.id.wallets);
+			mainRouter.navigateTo(R.id.exchange_rate);
 		}
 
 		compositeDisposable.add(fcmChannel.token().subscribe(token -> Timber.i(token)));

@@ -26,7 +26,7 @@ import io.reactivex.Observable;
 public final class CoinsRepositoryImpl implements CoinsRepository {
 
 	private final CoinMarketCapApi coinMarketCapApi;
-	private final LoftDb db;
+	private final CoinsDao coinsDao;
 	private final RxSchedulers schedulers;
 
 	@Inject
@@ -34,14 +34,19 @@ public final class CoinsRepositoryImpl implements CoinsRepository {
 	                           @NonNull final LoftDb db,
 	                           @NonNull final RxSchedulers schedulers) {
 		this.coinMarketCapApi = Objects.requireNonNull(coinMarketCapApi);
-		this.db = Objects.requireNonNull(db);
+		this.coinsDao = Objects.requireNonNull(db).coins();
 		this.schedulers = Objects.requireNonNull(schedulers);
 	}
 
 	@NonNull
 	@Override
+	public Observable<List<CoinEntity>> top(int limit) {
+		return coinsDao.fetchCoins(limit);
+	}
+
+	@NonNull
+	@Override
 	public Observable<List<CoinEntity>> listings(@NonNull final String convert) {
-		final CoinsDao coinsDao = db.coins();
 		return Observable.merge(
 			coinsDao.fetchAllCoins(),
 			coinMarketCapApi
@@ -69,6 +74,7 @@ public final class CoinsRepositoryImpl implements CoinsRepository {
 				}
 				entities.add(CoinEntity.create(
 					coin.getId(),
+					coin.getName(),
 					coin.getSymbol(),
 					price,
 					change24

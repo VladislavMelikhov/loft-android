@@ -52,6 +52,7 @@ public final class WalletsViewModel extends ViewModel {
 			.filter(wallets -> !wallets.isEmpty())
 			.switchMap(wallets -> walletPosition
 				.observeOn(schedulers.io())
+				.map(position -> Math.max(0, position))
 				.map(position -> Math.min(position, wallets.size() - 1))
 				.map(wallets::get)
 			)

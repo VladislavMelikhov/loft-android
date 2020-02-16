@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.loftschool.loftcoin.AppComponent;
 import com.loftschool.loftcoin.R;
 import com.loftschool.loftcoin.fcm.FcmChannel;
-import com.loftschool.loftcoin.presentation.ConverterFragment;
+import com.loftschool.loftcoin.presentation.converter.ConverterFragment;
 import com.loftschool.loftcoin.presentation.wallets.WalletsFragment;
 import com.loftschool.loftcoin.presentation.rates.ExchangeRatesFragment;
 import com.loftschool.loftcoin.util.Supplier;

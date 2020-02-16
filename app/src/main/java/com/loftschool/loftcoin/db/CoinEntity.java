@@ -11,11 +11,14 @@ import java.util.Objects;
 
 @AutoValue
 @Entity(tableName = "coins")
-public abstract class CoinEntity {
+public abstract class CoinEntity implements StableId<Long> {
 
 	@PrimaryKey
 	@AutoValue.CopyAnnotations
-	public abstract long id();
+	@Override
+	public abstract Long id();
+
+	public abstract String name();
 
 	public abstract String symbol();
 
@@ -24,10 +27,12 @@ public abstract class CoinEntity {
 	public abstract double change24();
 
 	public static CoinEntity create(final long id,
+	                                @NonNull final String name,
 	                                @NonNull final String symbol,
 	                                final double price,
 	                                final double change24) {
+		Objects.requireNonNull(name);
 		Objects.requireNonNull(symbol);
-		return new AutoValue_CoinEntity(id, symbol, price, change24);
+		return new AutoValue_CoinEntity(id, name, symbol, price, change24);
 	}
 }
